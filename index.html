@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Product Entry</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      height: 100vh;
+      flex-direction: column;
+      background-color: #f4f4f4;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: auto;
+      padding: 20px;
+      background-color: #ffffff;
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      margin-top: 30px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #555;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .btn {
+      padding: 10px 15px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 5px;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin-top: 20px;
+    }
+
+    li {
+      background: #eee;
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 5px;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        margin: 20px;
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Add Product Info</h2>
+
+    <div class="form-group">
+      <label>Name</label>
+      <input type="text" id="name">
+    </div>
+
+    <div class="form-group">
+      <label>Address</label>
+      <input type="text" id="address">
+    </div>
+
+    <div class="form-group">
+      <label>Product Name</label>
+      <input type="text" id="product">
+    </div>
+
+    <div class="form-group">
+      <label>Price</label>
+      <input type="number" id="price">
+    </div>
+
+    <button class="btn" onclick="addItem()">Add</button>
+    <button class="btn" onclick="sortAsc()">Sort Low to High</button>
+    <button class="btn" onclick="sortDesc()">Sort High to Low</button>
+
+    <ul id="productList"></ul>
+  </div>
+
+  <script>
+    let products = [];
+
+    function addItem() {
+      const name = document.getElementById("name").value;
+      const address = document.getElementById("address").value;
+      const product = document.getElementById("product").value;
+      const price = parseFloat(document.getElementById("price").value);
+
+      if (name && address && product && !isNaN(price)) {
+        products.push({ name, address, product, price });
+        displayProducts();
+        clearFields();
+      } else {
+        alert("Please fill all fields correctly.");
+      }
+    }
+
+    function sortAsc() {
+      products = mergeSort(products, true);
+      displayProducts();
+    }
+
+    function sortDesc() {
+      products = mergeSort(products, false);
+      displayProducts();
+    }
+
+   
